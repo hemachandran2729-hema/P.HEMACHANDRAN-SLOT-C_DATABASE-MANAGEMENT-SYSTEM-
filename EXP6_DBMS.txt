@@ -1,0 +1,147 @@
+mysql> INSERT INTO ASSESSMENT
+    -> VALUES
+    -> (101,'C01',78),
+    -> (101,'C02',85),
+    -> (102,'C01',65),
+    -> (102,'C03',90),
+    -> (103,'C02',55),
+    -> (104,'C01',72),
+    -> (104,'C03',88),
+    -> (105,'C02',49);
+Query OK, 8 rows affected (0.01 sec)
+Records: 8  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM ASSESSMENT;
++-------+----------+-------+
+| RegNo | CourseNo | Score |
++-------+----------+-------+
+|   101 | C01      |    78 |
+|   101 | C02      |    85 |
+|   102 | C01      |    65 |
+|   102 | C03      |    90 |
+|   103 | C02      |    55 |
+|   104 | C01      |    72 |
+|   104 | C03      |    88 |
+|   105 | C02      |    49 |
++-------+----------+-------+
+8 rows in set (0.00 sec)
+
+mysql> SELECT CourseDesc, CourseType
+    -> FROM COURSE
+    -> WHERE CourseDesc IN ('Statistics','Programming');
++-------------+------------+
+| CourseDesc  | CourseType |
++-------------+------------+
+| Programming | T          |
+| Statistics  | T          |
++-------------+------------+
+2 rows in set (0.00 sec)
+
+mysql> ^C
+mysql> SELECT CourseNo, Score
+    -> FROM ASSESSMENT
+    -> WHERE Score BETWEEN 50 AND 80;
++----------+-------+
+| CourseNo | Score |
++----------+-------+
+| C01      |    78 |
+| C01      |    65 |
+| C02      |    55 |
+| C01      |    72 |
++----------+-------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT AVG(Score) AS Average_Mark
+    -> FROM ASSESSMENT
+    -> WHERE CourseNo='C02';
++--------------+
+| Average_Mark |
++--------------+
+|      63.0000 |
++--------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT
+    -> MAX(Score) AS Maximum_Mark,
+    -> MIN(Score) AS Minimum_Mark
+    -> FROM ASSESSMENT
+    -> WHERE CourseNo='C02';
++--------------+--------------+
+| Maximum_Mark | Minimum_Mark |
++--------------+--------------+
+|           85 |           49 |
++--------------+--------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT
+    -> CourseNo,
+    -> MAX(Score) AS Maximum,
+    -> MIN(Score) AS Minimum,
+    -> AVG(Score) AS Average
+    -> FROM ASSESSMENT
+    -> GROUP BY CourseNo;
++----------+---------+---------+---------+
+| CourseNo | Maximum | Minimum | Average |
++----------+---------+---------+---------+
+| C01      |      78 |      65 | 71.6667 |
+| C02      |      85 |      49 | 63.0000 |
+| C03      |      90 |      88 | 89.0000 |
++----------+---------+---------+---------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT
+    -> C.CourseDesc,
+    -> AVG(A.Score) AS Average_Mark
+    -> FROM COURSE C
+    -> JOIN ASSESSMENT A
+    -> ON C.CourseNo=A.CourseNo
+    -> GROUP BY C.CourseDesc;
++-------------+--------------+
+| CourseDesc  | Average_Mark |
++-------------+--------------+
+| Programming |      71.6667 |
+| Database    |      63.0000 |
+| Statistics  |      89.0000 |
++-------------+--------------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT SUM(Score) AS Total_Score
+    -> FROM ASSESSMENT;
++-------------+
+| Total_Score |
++-------------+
+|         582 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT
+    -> C.CourseDesc,
+    -> COUNT(A.RegNo) AS Number_of_Students
+    -> FROM COURSE C
+    -> JOIN ASSESSMENT A
+    -> ON C.CourseNo=A.CourseNo
+    -> GROUP BY C.CourseDesc;
++-------------+--------------------+
+| CourseDesc  | Number_of_Students |
++-------------+--------------------+
+| Programming |                  3 |
+| Database    |                  3 |
+| Statistics  |                  2 |
++-------------+--------------------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT
+    -> RegNo,
+    -> COUNT(CourseNo) AS Total_Courses
+    -> FROM ASSESSMENT
+    -> GROUP BY RegNo;
++-------+---------------+
+| RegNo | Total_Courses |
++-------+---------------+
+|   101 |             2 |
+|   102 |             2 |
+|   103 |             1 |
+|   104 |             2 |
+|   105 |             1 |
++-------+---------------+
+5 rows in set (0.00 sec)
