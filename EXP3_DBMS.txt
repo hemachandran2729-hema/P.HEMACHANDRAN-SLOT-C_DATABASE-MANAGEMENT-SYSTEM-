@@ -1,0 +1,140 @@
+mysql> INSERT INTO STUDENT
+    -> VALUES
+    -> (101,'Arun','M','2005-01-10',9876543210,'Salem'),
+    -> (102,'Priya','F','2005-03-15',9876543211,'Chennai'),
+    -> (103,'Karthik','M','2004-11-20',9876543212,'Coimbatore'),
+    -> (104,'Divya','F','2005-07-08',9876543213,'Madurai'),
+    -> (105,'Ramesh','M','2004-12-05',9876543214,'Salem');
+Query OK, 5 rows affected (0.03 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM STUDENT;
++-------+---------+--------+------------+------------+------------+
+| regno | name    | gender | DOB        | mobileNo   | city       |
++-------+---------+--------+------------+------------+------------+
+|   101 | Arun    | M      | 2005-01-10 | 9876543210 | Salem      |
+|   102 | Priya   | F      | 2005-03-15 | 9876543211 | Chennai    |
+|   103 | Karthik | M      | 2004-11-20 | 9876543212 | Coimbatore |
+|   104 | Divya   | F      | 2005-07-08 | 9876543213 | Madurai    |
+|   105 | Ramesh  | M      | 2004-12-05 | 9876543214 | Salem      |
++-------+---------+--------+------------+------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> INSERT INTO FACULTY
+    -> (FacNo,FacName,Gender,DOB,DOJ,MobileNo,Dept)
+    -> VALUES
+    -> ('F001','Mohan','M','1980-05-10','2010-06-15',9876500001,'CSE'),
+    -> ('F002','Kamal','M','1982-08-20','2012-07-12',9876500002,'ECE'),
+    -> ('F003','Anitha','F','1985-09-15','2015-06-18',9876500003,'IT');
+ERROR 1062 (23000): Duplicate entry 'F001' for key 'faculty.PRIMARY'
+mysql> SELECT * FROM FACULTY;
++-------+---------+--------+------------+------------+------------+------+
+| FacNo | FacName | Gender | DOB        | DOJ        | MobileNo   | Dept |
++-------+---------+--------+------------+------------+------------+------+
+| F001  | Mohan   | M      | 1980-05-10 | 2010-06-15 | 9876500001 | CSE  |
+| F002  | Kamal   | M      | 1982-08-20 | 2012-07-12 | 9876500002 | ECE  |
+| F003  | Anitha  | F      | 1985-09-15 | 2015-06-18 | 9876500003 | IT   |
++-------+---------+--------+------------+------------+------------+------+
+3 rows in set (0.00 sec)
+
+mysql> INSERT INTO DEPARTMENT
+    -> VALUES
+    -> ('D001','CSE','F001'),
+    -> ('D002','ECE','F002'),
+    -> ('D003','IT','F003');
+ERROR 1062 (23000): Duplicate entry 'D001' for key 'department.PRIMARY'
+mysql> SELECT * FROM DEPARTMENT;
++--------+----------+----------+
+| DeptNo | DeptName | DeptHead |
++--------+----------+----------+
+| D001   | CSE      | F001     |
+| D002   | ECE      | F002     |
+| D003   | IT       | F003     |
++--------+----------+----------+
+3 rows in set (0.00 sec)
+
+mysql> INSERT INTO COURSE
+    -> VALUES
+    -> ('C01','Programming','T','1','H001','F001'),
+    -> ('C02','Database','T','3','H002','F002'),
+    -> ('C03','Statistics','T','2','H003','F003');
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> SELECT * FROM COURSE;
+Empty set (0.00 sec)
+
+mysql> INSERT INTO STUDENT2
+    -> VALUES
+    -> (101,'Arun','M','2005-01-10',9876543210,'Salem'),
+    -> (102,'Priya','F','2005-03-15',9876543211,'Chennai'),
+    -> (103,'Karthik','M','2004-11-20',9876543212,'Coimbatore');
+Query OK, 3 rows affected (0.03 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM STUDENT2;
++-------+---------+--------+------------+------------+------------+
+| regno | s1Name  | gender | DOB        | MobileNo   | city       |
++-------+---------+--------+------------+------------+------------+
+|   101 | Arun    | M      | 2005-01-10 | 9876543210 | Salem      |
+|   102 | Priya   | F      | 2005-03-15 | 9876543211 | Chennai    |
+|   103 | Karthik | M      | 2004-11-20 | 9876543212 | Coimbatore |
++-------+---------+--------+------------+------------+------------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT * FROM STUDENT;
++-------+---------+--------+------------+------------+------------+
+| regno | name    | gender | DOB        | mobileNo   | city       |
++-------+---------+--------+------------+------------+------------+
+|   101 | Arun    | M      | 2005-01-10 | 9876543210 | Salem      |
+|   102 | Priya   | F      | 2005-03-15 | 9876543211 | Chennai    |
+|   103 | Karthik | M      | 2004-11-20 | 9876543212 | Coimbatore |
+|   104 | Divya   | F      | 2005-07-08 | 9876543213 | Madurai    |
+|   105 | Ramesh  | M      | 2004-12-05 | 9876543214 | Salem      |
++-------+---------+--------+------------+------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT * FROM FACULTY;
++-------+---------+--------+------------+------------+------------+------+
+| FacNo | FacName | Gender | DOB        | DOJ        | MobileNo   | Dept |
++-------+---------+--------+------------+------------+------------+------+
+| F001  | Mohan   | M      | 1980-05-10 | 2010-06-15 | 9876500001 | CSE  |
+| F002  | Kamal   | M      | 1982-08-20 | 2012-07-12 | 9876500002 | ECE  |
+| F003  | Anitha  | F      | 1985-09-15 | 2015-06-18 | 9876500003 | IT   |
++-------+---------+--------+------------+------------+------------+------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT * FROM DEPARTMENT;
++--------+----------+----------+
+| DeptNo | DeptName | DeptHead |
++--------+----------+----------+
+| D001   | CSE      | F001     |
+| D002   | ECE      | F002     |
+| D003   | IT       | F003     |
++--------+----------+----------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT * FROM COURSE;
+Empty set (0.00 sec)
+
+mysql> SELECT * FROM STUDENT2;
++-------+---------+--------+------------+------------+------------+
+| regno | s1Name  | gender | DOB        | MobileNo   | city       |
++-------+---------+--------+------------+------------+------------+
+|   101 | Arun    | M      | 2005-01-10 | 9876543210 | Salem      |
+|   102 | Priya   | F      | 2005-03-15 | 9876543211 | Chennai    |
+|   103 | Karthik | M      | 2004-11-20 | 9876543212 | Coimbatore |
++-------+---------+--------+------------+------------+------------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT RegNo, Name, City
+    -> FROM STUDENT;
++-------+---------+------------+
+| RegNo | Name    | City       |
++-------+---------+------------+
+|   101 | Arun    | Salem      |
+|   102 | Priya   | Chennai    |
+|   103 | Karthik | Coimbatore |
+|   104 | Divya   | Madurai    |
+|   105 | Ramesh  | Salem      |
++-------+---------+------------+
+5 rows in set (0.00 sec)
+
