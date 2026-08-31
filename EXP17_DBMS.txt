@@ -1,0 +1,80 @@
+mysql> CREATE TABLE customer(
+    ->     CNAME VARCHAR(30),
+    ->     CREDITLIMIT INT
+    -> );
+Query OK, 0 rows affected (0.17 sec)
+
+mysql> INSERT INTO customer VALUES
+    -> ('DINESH',30000),
+    -> ('NAGENDRA',60000),
+    -> ('RAJA',45000),
+    -> ('RAMU',5000);
+Query OK, 4 rows affected (0.08 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> DELIMITER //
+mysql> CREATE FUNCTION CustomerLevel(p_CREDITLIMIT INT)
+    -> RETURNS VARCHAR(10)
+    -> DETERMINISTIC
+    -> BEGIN
+    ->     DECLARE lvl VARCHAR(10);
+    ->
+    ->     IF p_CREDITLIMIT > 50000 THEN
+    ->         SET lvl = 'PLATINUM';
+    ->     ELSEIF (p_CREDITLIMIT <= 50000 AND p_CREDITLIMIT >= 10000) THEN
+    ->         SET lvl = 'GOLD';
+    ->     ELSEIF p_CREDITLIMIT < 10000 THEN
+    ->         SET lvl = 'SILVER';
+    ->     END IF;
+    ->
+    ->     RETURN lvl;
+    -> END
+    -> //
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> DELIMITER ;
+mysql> SELECT CNAME, CustomerLevel(CREDITLIMIT)
+    -> FROM customer
+    -> ORDER BY CNAME;
++----------+----------------------------+
+| CNAME    | CustomerLevel(CREDITLIMIT) |
++----------+----------------------------+
+| DINESH   | GOLD                       |
+| NAGENDRA | PLATINUM                   |
+| RAJA     | GOLD                       |
+| RAMU     | SILVER                     |
++----------+----------------------------+
+4 rows in set (0.03 sec)
+
+mysql> SET @@GLOBAL.max_sp_recursion_depth = 255;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SET @@SESSION.max_sp_recursion_depth = 255;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> DELIMITER $$
+mysql> CREATE PROCEDURE factorial(IN n INT, OUT fact INT)
+    -> BEGIN
+    ->     IF n = 1 THEN
+    ->         SET fact = 1;
+    ->     ELSE
+    ->         CALL factorial(n - 1, fact);
+    ->         SET fact = n * fact;
+    ->     END IF;
+    -> END
+    -> $$
+Query OK, 0 rows affected (0.17 sec)
+
+mysql> DELIMITER ;
+mysql> CALL factorial(5,@f);
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SELECT @f;
++------+
+| @f   |
++------+
+|  120 |
++------+
+1 row in set (0.00 sec)
+
+mysql>
