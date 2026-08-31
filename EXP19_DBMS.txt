@@ -1,0 +1,52 @@
+mysql> CREATE TABLE student(
+    ->     id INT,
+    ->     name VARCHAR(50),
+    ->     email VARCHAR(100)
+    -> );
+Query OK, 0 rows affected (0.14 sec)
+
+mysql> INSERT INTO student VALUES
+    -> (1,'peter','peter@gmail.com'),
+    -> (2,'john','john@gmail.com'),
+    -> (3,'tony stark','tony@gmail.com');
+Query OK, 3 rows affected (0.10 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> CREATE TABLE student_audit(
+    ->     id INT AUTO_INCREMENT PRIMARY KEY,
+    ->     student_id INT,
+    ->     lastname VARCHAR(50),
+    ->     changedat DATETIME,
+    ->     action VARCHAR(20)
+    -> );
+Query OK, 0 rows affected (0.16 sec)
+
+mysql> DELIMITER //
+mysql> CREATE TRIGGER before_student_update
+    -> BEFORE UPDATE ON student
+    -> FOR EACH ROW
+    -> BEGIN
+    ->     INSERT INTO student_audit
+    ->     SET action = 'update',
+    ->         student_id = OLD.id,
+    ->         lastname = OLD.name,
+    ->         changedat = NOW();
+    -> END //
+Query OK, 0 rows affected (0.09 sec)
+
+mysql> DELIMITER ;
+mysql> UPDATE student
+    -> SET name = 'tony_stark_c'
+    -> WHERE id = 3;
+Query OK, 1 row affected (0.08 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM student_audit;
++----+------------+------------+---------------------+--------+
+| id | student_id | lastname   | changedat           | action |
++----+------------+------------+---------------------+--------+
+|  1 |          3 | tony stark | 2026-08-13 11:44:06 | update |
++----+------------+------------+---------------------+--------+
+1 row in set (0.00 sec)
+
+mysql>
